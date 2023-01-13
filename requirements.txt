@@ -1,0 +1,4 @@
+PyQt5==5.13.0
+numpy
+pyserial
+pyqtgraph
