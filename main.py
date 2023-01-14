@@ -11,8 +11,8 @@ degreesPerStep = 360 / stepsPerRevolution
 scanId = 0
 lidarPort = 'COM3'
 
-lidar = serial.Serial(lidarPort, 128000)
-lidar.flush()
+lidar = serial.Serial(lidarPort, 128000) #serial.Serial(lidarPort, Baudrate) 
+lidar.flush() # Waits for the transmission of outgoing serial data to complet 
 # time.sleep(1)
 
 
@@ -29,15 +29,15 @@ def wait_reply_header():
 def get_scan():
     data = {}
     lidar.read(2)
-    data['ct'] = int.from_bytes(lidar.read(1), byteorder='little')
-    data['lsn'] = int.from_bytes(lidar.read(1), byteorder='little')
-    data['fsa'] = int.from_bytes(lidar.read(2), byteorder='little') >> 1
-    data['lsa'] = int.from_bytes(lidar.read(2), byteorder='little') >> 1
+    data['ct'] = int.from_bytes(lidar.read(1), byteorder='little') # Indicates the current packet type
+    data['lsn'] = int.from_bytes(lidar.read(1), byteorder='little') #  Indicates the number of sample points contained in the current packet
+    data['fsa'] = int.from_bytes(lidar.read(2), byteorder='little') >> 1 # First sample angle
+    data['lsa'] = int.from_bytes(lidar.read(2), byteorder='little') >> 1 # Last sample angle
     data['sample'] = []
     lidar.read(2)
     for sample in range(0, data['lsn']):
         data['sample'].append(
-            int.from_bytes(lidar.read(2), byteorder='little') / 4)
+            int.from_bytes(lidar.read(2), byteorder='little') / 4) # page 6 of the datasheet DEVELOPMENT MANUAL
     return data
 
 
@@ -45,7 +45,7 @@ def get_ang_correct(distance):
     if distance == 0:
         return 0
     return math.degrees(
-        math.atan(21.8 * (155.3 - distance) / (155.3 * distance)))
+        math.atan(21.8 * (155.3 - distance) / (155.3 * distance))) # page 7 of the datasheet DEVELOPMENT MANUAL
 
 
 def process_trame(trame):
