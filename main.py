@@ -80,6 +80,16 @@ def get_cartesian_coords(buf):
         y.append(buf[angle] * np.sin(math.radians(angle)))
     return (x, y)
 
+def filtrage(x,y): #Fonction de filtrage des points, si x et y sont superieurs a 3000 ou inferieurs a -3000, on les supprime
+    i = 0
+    while i < len(x):
+        if x[i] > 3000 or x[i] < -3000 or y[i] > 3000 or y[i] < -3000:
+            x.pop(i)
+            y.pop(i)
+        else:
+            i += 1
+    return x,y
+
 
 if __name__ == '__main__':
     lidar.write(serial.to_bytes([0xA5, 0x60]))
@@ -113,11 +123,13 @@ if __name__ == '__main__':
                     d = new_value['distance'][index]
                     buf[a] = d
                     if previous > a and previous > 300 and size > 400:
-                        x, y = get_cartesian_coords(buf)
+                        print(previous)
+                        x,y = get_cartesian_coords(buf)
+                        x,y = filtrage(x,y) #Filtrage des points
                         size = 0
                         fig.plot(x, y, clear=True, pen=(0,200,0),  symbol='o', symbolSize=1)
-                        fig.setXRange(-3000, 3000)
-                        fig.setYRange(-3000, 3000)
+                        # fig.setXRange(-3000, 3000)
+                        # fig.setYRange(-3000, 3000)
                         fig.plot([0], [0], symbolPen='r')
                     previous = a
                     size += 1
