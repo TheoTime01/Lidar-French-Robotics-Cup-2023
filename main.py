@@ -5,6 +5,7 @@ import numpy as np
 import pyqtgraph as pg  # pip install PyQt5==5.13.0 <- THIS IS IMPORTANT! NEWER DOES NOT WORK ON OSX 10.12.6
 import time
 
+
 stepsPerRevolution = 700
 degreesPerStep = 360 / stepsPerRevolution
 
@@ -91,6 +92,8 @@ def filtrage(x,y): #Fonction de filtrage des points, si x et y sont superieurs a
     return x,y
 
 
+
+
 if __name__ == '__main__':
     lidar.write(serial.to_bytes([0xA5, 0x60]))
     wait_reply_header()
@@ -118,12 +121,12 @@ if __name__ == '__main__':
 
                     #print("new_value",new_value)
                     #print("new_value['angle'][0]",new_value['angle'][0])
-
+                    
+                    
                     a = int(new_value['angle'][index])
                     d = new_value['distance'][index]
                     buf[a] = d
                     if previous > a and previous > 300 and size > 400:
-                        print(previous)
                         x,y = get_cartesian_coords(buf)
                         x,y = filtrage(x,y) #Filtrage des points
                         size = 0
