@@ -1,5 +1,5 @@
 <img src="/images/galileo_logo.jpg" align="right" width="300" alt="header pic"/>
-<a align="right" href="https://www.linkedin.com/company/galil%C3%A9o-cpe-lyon/" >Galiléo CPE Lyon</a>
+<h2 align="right" >Galiléo CPE Lyon </h2><a href="https://www.linkedin.com/company/galil%C3%A9o-cpe-lyon/" ></a>
 
 # Lidar French Robotics Cup 2023
 
