@@ -23,7 +23,7 @@ As a participant in the French Robotics Cup, my student association [Galiléo](h
 ![image](images/YDLIDAR_X4.jpg)
 
 ## Context
-The French Robotics Cup is a competition for amateur robotics enthusiasts, including young people in clubs, school groups, or with friends. The aim is to encourage learning and practical application of knowledge through a fun and friendly event. Participants are tasked with building an autonomous robot and optionally, a secondary robot. The 2023 edition of the competition requires robots to complete various tasks such as baking cakes, putting cherries on cakes, putting remaining cherries in a basket, putting wheels in a dish, dressing up for a party, and calculating the bill - all in 100 seconds. More information about the competition can be found on their[website](https://www.coupederobotique.fr/).
+The French Robotics Cup is a competition for amateur robotics enthusiasts, including young people in clubs, school groups, or with friends. The aim is to encourage learning and practical application of knowledge through a fun and friendly event. Participants are tasked with building an autonomous robot and optionally, a secondary robot. The 2023 edition of the competition requires robots to complete various tasks such as baking cakes, putting cherries on cakes, putting remaining cherries in a basket, putting wheels in a dish, dressing up for a party, and calculating the bill - all in 100 seconds. More information about the competition can be found on their [website](https://www.coupederobotique.fr/).
 
 ![image](images/cdf-terrain.jpg)
 
