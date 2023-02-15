@@ -1,9 +1,10 @@
 <img src="/images/galileo_logo.jpg" align="right" width="300" alt="header pic"/>
+<a href="https://www.linkedin.com/company/galil%C3%A9o-cpe-lyon/" align="right">Galiléo CPE Lyon</a>
 
-# Lidar French Robotics Cup
+# Lidar French Robotics Cup 2023
 
 ## Table of Contents
-- [Lidar French Robotics Cup](#lidar-french-robotics-cup)
+- [Lidar French Robotics Cup 2023](#lidar-french-robotics-cup-2023)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Context](#context)
@@ -11,7 +12,8 @@
     - [YDLIDAR X4 System Modes](#ydlidar-x4-system-modes)
     - [YDLIDAR X4 External Device Interaction](#ydlidar-x4-external-device-interaction)
     - [YDLidar Communication Protocol](#ydlidar-communication-protocol)
-  - [](#)
+  - [Strategy](#strategy)
+  - [References](#references)
 
 
 
@@ -44,4 +46,19 @@ The YDLIDAR X4 system interacts with external devices through the use of command
 ### YDLidar Communication Protocol
 Please refer to the [YDLidar Communication Protocol](YDLidar%20Communication%20Protocol.md) for detailed information.
 
-## 
+## Strategy
+The primary objective of this project is to create two point models - one to represent the terrain of the French Robotics Cup and the other to correspond with the output of the Lidar - that can be superimposed to distinguish between two categories of points:
+
+- _"Authorized zone"_: The authorized zone will consist of points on the ground that do not correspond to Lidar points.
+- _"Forbidden zone"_ : the forbidden zone will consist of points on the ground that do correspond to Lidar points. 
+
+If the robot approaches the forbidden zone, a __Boolean message__ will be transmitted to alert the system, prompting the robot to change direction.
+
+To accurately determine the robot's orientation, the Lidar will be strategically positioned such that the angle 0 direction of the Lidar is aligned with the robot's front. This will allow the robot's rotation to be seamlessly incorporated without necessitating changes to the reference points.
+
+![image](images/YDLIDAR_zero_dir.jpg)
+
+## References
+- [YDLIDAR X4 User Manual](https://www.ydlidar.com/download/YDLIDAR%20X4%20User%20Manual.pdf)
+- [PythonRobotics](https://github.com/AtsushiSakai/PythonRobotics.git)
+- [yd-lidar-x4-python](https://github.com/Neumi/yd-lidar-x4-python.git)
