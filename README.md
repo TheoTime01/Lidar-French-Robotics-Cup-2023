@@ -1,9 +1,9 @@
 <img src="/images/galileo_logo.jpg" align="right" width="300" alt="header pic"/>
 
-# Lidar Coupe de France de Robotique
+# Lidar French Robotics Cup
 
 ## Table of Contents
-- [Lidar Coupe de France de Robotique](#lidar-coupe-de-france-de-robotique)
+- [Lidar French Robotics Cup](#lidar-french-robotics-cup)
   - [Table of Contents](#table-of-contents)
   - [Introduction](#introduction)
   - [Context](#context)
