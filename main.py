@@ -126,13 +126,7 @@ if __name__ == '__main__':
                     a = int(new_value['angle'][index])
                     d = new_value['distance'][index]
                     buf[a] = d
-                    # plot the angle 0 with a red line going from 0 to the point (x,y)
-                    if a == 0:
-                        x,y = get_cartesian_coords(buf)
-                        x,y = filtrage(x,y)
-                        size = 0
                         #plot a red line from 0 to the point (x,y)
-                        fig.plot(x, y, clear=True, pen=(0,200,0),  symbol='-', symbolSize=1)
                     if previous > a and previous > 300 and size > 400:
                         x,y = get_cartesian_coords(buf)
                         x,y = filtrage(x,y) #Filtrage des points
