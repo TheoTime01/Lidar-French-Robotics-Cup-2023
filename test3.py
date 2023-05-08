@@ -1,48 +1,40 @@
 import PyLidar3
-import math    
+import math
 import time
-import csv # for writing to csv file
+import RPi.GPIO as GPIO
+
+# Set up GPIO pins
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(18, GPIO.OUT)
+GPIO.setup(23, GPIO.OUT)
 
 
-def al_kashi_theorem(distances):
-    """
-    Apply the Al-Kashi theorem to the distances to find the opposite side
-    """
-    results = {}
-    for angle, distance in distances.items():
-        opposite = 0
-        for a, d in distances.items():
-            if a != angle:
-                opposite += d**2
-        opposite -= distance**2
-        opposite /= -2*distance
-        opposite = math.sqrt(opposite)
-        results[angle] = opposite
-    return results
-
-
-Obj = PyLidar3.YdLidarX4("COM3") #PyLidar3.your_version_of_lidar(port,chunk_size) 
+Obj = PyLidar3.YdLidarX4("COM3") #PyLidar3.your_version_of_lidar(port,chunk_size)
 if(Obj.Connect()):
+    # print("Connected to Lidar")
     print(Obj.GetDeviceInfo())
     gen = Obj.StartScanning()
-    t = time.time() # start time 
-    while True: #scan for 30 seconds
-        opp=0
-        data = next(gen)
-        data2 = al_kashi_theorem(data)
-        for angle in data:
-            distance = data[angle]
-            if 40<distance<60:
-                print("Distance: ", distance)
-                print("Angle: ", angle)
-                print("Opposite: ", data2[angle])
-                print("Time taken: ", time.time() - t)
-                opp = opp+data2[angle]
-        
-        if opp>=190:
-            print("Enemy detected")
-                
-    Obj.StopScanning()
-    Obj.Disconnect()
-else:
-    print("Error connecting to device")
+    # t = time.time() # start time
+    i=0
+    try:
+        while True:
+            data = next(gen)
+            i+=1
+            opponent_detected = False # assume no opponent detected
+            for angle in data:
+                if 90<angle<270:
+                    if 400<data[angle]<600: # detects an opponent
+                        # t1 = time.time() - t
+                        # print("tour :", i, "angle :" ,angle," distance :",data[angle], "time :", t1)
+                        opponent_detected = True # set the flag to True
+            if not opponent_detected: # if no opponent detected
+                GPIO.output(18, GPIO.LOW) # turn off LED connected to GPIO pin 18
+                GPIO.output(23, GPIO.HIGH) # turn on LED connected to GPIO pin 23
+            else:
+                GPIO.output(18, GPIO.HIGH) # turn on LED connected to GPIO pin 18
+                GPIO.output(23, GPIO.LOW) # turn off LED connected to GPIO pin 23
+    except KeyboardInterrupt:
+        Obj.StopScanning()
+
+# Clean up GPIO pins
+GPIO.cleanup()

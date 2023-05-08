@@ -7,50 +7,29 @@ import matplotlib.animation as animation
 lidar = PyLidar3.YdLidarX4("COM3")
 lidar.StartScanning()
 
-# create matplotlib figure and axes
-fig, ax = plt.subplots()
-ax.set_title('Lidar Data')
-
-# set the x and y limits of the plot
-ax.set_xlim([-5000, 5000])
-ax.set_ylim([-5000, 5000])
-
-# create scatter plot object
-scatter_plot = ax.scatter([], [], s=1)
-
-# update function to read and display lidar data
-def update(i):
-    data = lidar.StartScanning()
-    angles = data[0]
-    distances = data[1]
-
-    points = []
-    for i, angle in enumerate(angles):
-        distance = distances[i]
-        x = distance * np.cos(np.radians(angle))
-        y = distance * np.sin(np.radians(angle))
-        points.append([x, y])
-
-        # check for angle and distance thresholds
-        if angle >= 1 and angle <= 90 and distance < 300:
-            print("Enemy Right Front")
-
-        elif angle >= 91 and angle <= 180 and distance < 300:
-            print("Enemy Right Rear")
-
-        elif angle >= 181 and angle <= 270 and distance < 300:
-            print("Front left enemy")
-
-        elif angle >= 271 and angle <= 360 and distance < 300:
-            print("Left Front Enemy")
-
-    scatter_plot.set_offsets(points)
-
-# # set up animation
-# ani = animation.FuncAnimation(fig, update, interval=50)
-
-# plt.show()
-
-# stop lidar scanning and disconnect
-lidar.StopScanning()
-lidar.Disconnect()
+# verifie if there is a enemy between 90 and 270
+def is_detected(data):
+    """ Return True if the opposite side is greater than 190mm between the angles 20 degrees and 160 degrees
+        Args:
+            D: the list of distances and angles D={angle:distance}
+        Returns:
+            True if the opposite side is greater than 190mm between the angles 90 degrees and 270 degrees
+            False otherwise
+    """
+    data2 = calculate_opposite_side(data)
+    opp=0
+    a=0
+    for angle in data:
+        if 90<angle<270 :
+            if 40<data[angle]<60:
+                if angle-a < 3:
+                    opp = opp + data2[angle]
+                    a=angle
+                else:
+                    break
+        
+    if opp>=100:
+        print("enemy spotted")
+        return True
+    else:
+        return False
